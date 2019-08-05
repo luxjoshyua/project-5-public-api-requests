@@ -12,7 +12,7 @@
 * 
 
 # Key learnings
-* An understanding of the basic principles of Object-Oriented Programming
+* Working with APIs
 
 
 
