@@ -9,10 +9,13 @@
 
 # Extra Credit Features
 * Total CSS customisation
-* 
+* Search: add a way to filter the directory by name
+* Modal toggle: Add a way to toggle back and forth between employees when the modal window is open.
+
 
 # Key learnings
 * Working with APIs
+* Beginnings of asynchronous programming
 
 
 

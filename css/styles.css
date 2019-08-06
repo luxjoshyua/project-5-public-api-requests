@@ -3,6 +3,8 @@
 ======================================== */
 
 @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Archivo:400,600,700&display=swap');
+
 
 * {
 	box-sizing: border-box;
@@ -14,7 +16,8 @@ html, body {
 }
 
 body {
-    font-family: "Nunito", sans-serif;
+    /* font-family: "Nunito", sans-serif; */
+    font-family: 'Archivo', sans-serif;
     text-align: center;
     background: rgba(235, 235, 235, 0.9);
 }
