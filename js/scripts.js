@@ -1,3 +1,10 @@
+// GLOBAL CONSTS HERE
+
+const apiURL = 'https://randomuser.me/api/'
+
+
+
+
 // searchbar
 function searchBar() {
   // create the containing div
@@ -12,6 +19,12 @@ function searchBar() {
     `
   // append the div to the containing parent
   document.querySelector('.search-container').appendChild(searchHTML);
+}
+
+function createCard() {
+
+      
+
 }
 
 // gallery
@@ -70,11 +83,8 @@ function modal() {
     </div>
     `
   // append the div to the body
-  document.body.appendChild(modalHTML); 
+  document.body.appendChild(modalHTML);
 }
-
-
-
 
 
 
@@ -84,8 +94,6 @@ function modal() {
 // 1. send a single request to the API
 
 // 2. Use the response data to display 12 users, along with basic info
-
-
 
 API
  * Basic data I need from the API
@@ -111,12 +119,32 @@ API
 
  */
 
+function loadData(includes = '', nationality = '', limit = 1) {
+
+  // fetch here
+
+  console.log(`${apiURL}?inc=${includes}&nat=${nationality}&results=${limit}`);
+
+  fetch(`${apiURL}?inc=${includes}&nat=${nationality}&results=${limit}`)
+    .then(
+      function (response) {
+        // Examine the text in the response
+        console.log(response); 
+        response.json().then(function (data) {
+          console.log(data);
+        });
+
+      }
+    )
+
+}
+
 
 $.ajax({
   // customise the data returned using query? parameters
   url: 'https://randomuser.me/api/?inc=name,email,id,picture,nat,location,dob,cell?nat=au,ca,gb,us,nz',
   dataType: 'json',
-  success: function(data) {
+  success: function (data) {
     console.log(data);
   }
 });
@@ -126,4 +154,7 @@ $.ajax({
 // CALL MY FUNCTIONS
 searchBar();
 createGallery();
-modal(); 
+// modal();
+
+
+loadData('name,email,id,picture,nat,location,dob,cell', 'au,ca,gb,us,nz', 12);
