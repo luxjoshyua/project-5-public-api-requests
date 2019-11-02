@@ -196,7 +196,6 @@ header h1 {
     border: 1px solid rgba(100, 100, 100, 0.3);
 }
 
-
 .modal-btn-container .btn {
     display: inline-block;
     cursor: pointer;
@@ -264,3 +263,26 @@ header h1 {
         color: rgba(25, 25, 25, 1); 
     }
 }
+
+/* ===================================== 
+  Error page
+======================================== */
+
+.error {
+    display: none !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(226, 45, 45);
+    height: 100vh;
+
+}
+
+.error h1 {
+    font-size: 120px;
+    line-height: 130px;
+    text-align: center;
+}
+

@@ -1,160 +1,79 @@
-// GLOBAL CONSTS HERE
+// GLOBAL CONSTS
+const urlRequest = 'https://randomuser.me/api/?results=12&nat=us&inc=name,email,id,picture,nat,location,dob,phone';
+const body = document.getElementsByTagName("body"); 
+const gallery = document.getElementById("gallery");
 
-const apiURL = 'https://randomuser.me/api/'
 
+// Handle fetch request to get the list of employees
 
-
-
-// searchbar
-function searchBar() {
-  // create the containing div
-  const searchHTML = document.createElement('div');
-  // set the div HTML using provided markup 
-  searchHTML.innerHTML =
-    `
-      <form action="#" method="get">
-      <input type="search" id="search-input" class="search-input" placeholder="Search...">
-      <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
-      </form>
-    `
-  // append the div to the containing parent
-  document.querySelector('.search-container').appendChild(searchHTML);
+async function fetchRequest(url) {
+	try {
+		const request = await fetch(url);
+		const response = await request.json();
+		return Promise.all(response.results);
+	} catch (error) {
+		gallery.innerHTML = `An error occured fetching the data, ${error}`;
+	}
 }
 
-function createCard() {
+const userCardRequest = (data) => {
+  data.forEach(user => {
+    const containerDiv = document.createElement("div");
+    containerDiv.classList.add("card");
+    gallery.appendChild(containerDiv);
 
-      
-
-}
-
-// gallery
-function createGallery() {
-  // run a for loop, need card in the DOM 12 times
-  for (let i = 0; i <= 11; i++) {
-    // check loop is running 12 times
-    // console.log('working here' + i + 'times'); 
-    // create the containing div
-    const galleryHTML = document.createElement('div');
-    // set the div HTML using provided markup 
-    galleryHTML.innerHTML =
-      `
+    containerDiv.innerHTML = 
+    `
       <div class="card">
       <div class="card-img-container">
-          <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
+          <img class="card-img" src="${user.picture.thumbnail}" alt="profile picture">
       </div>
       <div class="card-info-container">
-          <h3 id="name" class="card-name cap">first last</h3>
-          <p class="card-text">email</p>
-          <p class="card-text cap">city, state</p>
+          <h3 id="name" class="card-name cap"${user.name.first}${user.name.last}</h3>
+          <p class="card-text">${user.email}</p>
+          <p class="card-text cap">${user.location.city}</p>
       </div>
     </div>
     `
-    // append the div to the containing parent
-    document.getElementById('gallery').appendChild(galleryHTML);
-  }
+
+  })
 }
 
-// modal
-function modal() {
-  // create the containing div
-  const modalHTML = document.createElement('div');
-  // set the div HTML using provided markup 
-  modalHTML.innerHTML =
-    `
-    <div class="modal-container">
-        <div class="modal">
-            <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-            <div class="modal-info-container">
-                <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
-                <h3 id="name" class="modal-name cap">name</h3>
-                <p class="modal-text">email</p>
-                <p class="modal-text cap">city</p>
-                <hr>
-                <p class="modal-text">(555) 555-5555</p>
-                <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-                <p class="modal-text">Birthday: 10/21/2015</p>
-            </div>
-        </div>
-        // IMPORTANT: Below is only for exceeds tasks 
-        <div class="modal-btn-container">
-            <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-            <button type="button" id="modal-next" class="modal-next btn">Next</button>
-        </div>
+
+
+// Setup gallery of 12 profiles you see on initial screen load
+function createUserCard(data) {
+
+  const card = data.map(card => `
+    <div class="card">
+    <div class="card-img-container">
+        <img class="card-img" src="${card.picture.thumbnail}" alt="profile picture">
     </div>
-    `
-  // append the div to the body
-  document.body.appendChild(modalHTML);
+    <div class="card-info-container">
+        <h3 id="name" class="card-name cap" value="${data.results}>${card.name.first}${card.name.last}</h3>
+        <p class="card-text">${card.email}</p>
+        <p class="card-text cap">${card.location}</p>
+    </div>
+  </div>
+  `)
+}
+
+
+const modalEvents = (data) => {
+
+  // handle all modal click events here
+
+
 }
 
 
 
 
-/**  API STEPS
-
-// 1. send a single request to the API
-
-// 2. Use the response data to display 12 users, along with basic info
-
-API
- * Basic data I need from the API
- 
-    With information provided from The Random User Generator API, 
-    send a single request to the API, and use the response data to display 12 users, 
-    along with some basic information for each:
-    *  Image
-    *  First and Last Name
-    *  Email
-    *  City or location
-  
-
-  When any part of an employee item in the directory is clicked, 
-  a modal window should pop up with the following details displayed:
-    *  Image
-    *  Name
-    *  Email
-    *  City or location
-    *  Cell Number
-    *  Detailed Address, including street name and number, state or country, and post code.
-    *  Birthday
-
- */
-
-function loadData(includes = '', nationality = '', limit = 1) {
-
-  // fetch here
-
-  console.log(`${apiURL}?inc=${includes}&nat=${nationality}&results=${limit}`);
-
-  fetch(`${apiURL}?inc=${includes}&nat=${nationality}&results=${limit}`)
-    .then(
-      function (response) {
-        // Examine the text in the response
-        console.log(response); 
-        response.json().then(function (data) {
-          console.log(data);
-        });
-
-      }
-    )
-
-}
-
-
-$.ajax({
-  // customise the data returned using query? parameters
-  url: 'https://randomuser.me/api/?inc=name,email,id,picture,nat,location,dob,cell?nat=au,ca,gb,us,nz',
-  dataType: 'json',
-  success: function (data) {
-    console.log(data);
-  }
-});
-
-
-
-// CALL MY FUNCTIONS
-searchBar();
-createGallery();
-// modal();
-
-
-loadData('name,email,id,picture,nat,location,dob,cell', 'au,ca,gb,us,nz', 12);
+fetchRequest(urlRequest)
+  .then(createUserCard)
+  // .then(modalEvents)
+  .catch(error => {
+    const errorPage = document.querySelector('.error');
+    errorPage.style.display = 'flex';
+    console.log('Our apologies but there is a' + error + 'with our API, it will be back up and running shortly!')
+  }); 
