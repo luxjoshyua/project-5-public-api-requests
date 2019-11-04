@@ -2,6 +2,8 @@
 const urlRequest = 'https://randomuser.me/api/?results=12&nat=us&inc=name,email,id,picture,nat,location,dob,phone';
 const body = document.getElementsByTagName("body");
 const gallery = document.getElementById("gallery");
+// populate this late with the user data
+let results = [];
 
 
 // Handle fetch request to get the list of employees
@@ -15,6 +17,7 @@ async function fetchRequest(url) {
   }
 }
 
+// create the 12 user cards on initial load
 const createUserCard = (data) => {
   // loop through each user and populate the card with the fetched data
   data.forEach(user => {
@@ -30,15 +33,73 @@ const createUserCard = (data) => {
           <img class="card-img" src="${user.picture.large}" alt="profile picture">
       </div>
       <div class="card-info-container">
-          <h3 id="name" class="card-name cap">${user.name.first}${user.name.last}</h3>
+          <h3 id="name" class="card-name cap">${user.name.first} ${user.name.last}</h3>
           <p class="card-text">${user.email}</p>
           <p class="card-text cap">${user.location.city}</p>
       </div>
     `
-
-
+    // push the results to my empty results array so I can access the data globally
+    results.push(user);
+    // console.log(user);
     
   })
+}
+
+
+/**
+ * create the searchbar functionality 
+ * What it needs to do:
+ *  Search for people already on the page, so you're not adding a new API request, just using the one already made
+ */
+
+const createSearchBar = (data) => {
+
+  // add the search to the DOM
+  const searchContainer = document.querySelector('.search-container'); 
+  // set the search innerHTML
+  searchContainer.innerHTML = 
+    `
+    <form action="#" method="get">
+      <input type="search" id="search-input" class="search-input" placeholder="Search...">
+      <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+    </form>
+    `
+  // select the search input field
+  const searchInput = document.querySelector('.search-input');
+  const filter = searchInput.value.toUpperCase();
+  const cards = document.querySelectorAll('.card');
+  const names = document.getElementById('name');
+  
+
+  
+  /**
+   * 
+   * I need my if else to test whether the text entered matches the content of my cards, specifically the first or last name
+   * I have the data/content of my cards saved in the global variable results
+   * 
+   * I need to loop through my cards and test each one, then show / hide depending on the first or last name content
+   */
+
+
+  for (let i = 0; i < names.length; i++ ) {
+
+    const txtValue = searchInput.textContent || searchInput.innerText; 
+    
+    // indexOf returns the first index at which a given element can be found in the array
+    if (txtValue.toUpperCase().indexOf(filter) > -1 ) {
+  
+      console.log('Show the specific user card here!')
+      cards[i].style.display = "";
+  
+    } else {
+  
+      searchInput.innerHTML = 'No matches, sorry!';
+      cards[i].style.display = "none"; 
+  
+    }
+
+  }
+
 }
 
 
@@ -134,6 +195,7 @@ cards.forEach(function (card) {
 
 fetchRequest(urlRequest)
   .then(createUserCard)
+  .then(createSearchBar)
   // .then(createModalCard)
   .then(modalEvents)
   .catch(error => {
