@@ -288,6 +288,7 @@ header h1 {
 
 .visible {
     display: flex;
+    border: 5px solid greenyellow;
 
 }
 
