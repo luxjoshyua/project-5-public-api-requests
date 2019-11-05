@@ -286,3 +286,12 @@ header h1 {
     text-align: center;
 }
 
+.visible {
+    display: flex;
+
+}
+
+.hidden {
+    display: none;
+}
+

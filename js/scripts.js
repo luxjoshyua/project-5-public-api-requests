@@ -2,8 +2,10 @@
 const urlRequest = 'https://randomuser.me/api/?results=12&nat=us&inc=name,email,id,picture,nat,location,dob,phone';
 const body = document.getElementsByTagName("body");
 const gallery = document.getElementById("gallery");
-// populate this late with the user data
-let results = [];
+
+// select the cards
+const cards = document.querySelectorAll('.card'); 
+
 
 
 // Handle fetch request to get the list of employees
@@ -38,13 +40,17 @@ const createUserCard = (data) => {
           <p class="card-text cap">${user.location.city}</p>
       </div>
     `
-    // push the results to my empty results array so I can access the data globally
-    results.push(user);
-    // console.log(user);
-    
+    user.cardElement = cardContainerDiv;
+    user.visible = true;
+
+
+    // console.log(user);    
   })
 }
 
+
+// console.log(results[0].name.first); 
+// console.log(results.name.last); 
 
 /**
  * create the searchbar functionality 
@@ -52,60 +58,82 @@ const createUserCard = (data) => {
  *  Search for people already on the page, so you're not adding a new API request, just using the one already made
  */
 
-const createSearchBar = (data) => {
-
+const createSearchBar = () => {
   // add the search to the DOM
-  const searchContainer = document.querySelector('.search-container'); 
+  const searchContainer = document.querySelector('.search-container');
   // set the search innerHTML
-  searchContainer.innerHTML = 
+  searchContainer.innerHTML =
     `
     <form action="#" method="get">
       <input type="search" id="search-input" class="search-input" placeholder="Search...">
       <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
     </form>
     `
-  // select the search input field
-  const searchInput = document.querySelector('.search-input');
-  const filter = searchInput.value.toUpperCase();
-  const cards = document.querySelectorAll('.card');
-  const names = document.getElementById('name');
-  
-
-  
-  /**
-   * 
-   * I need my if else to test whether the text entered matches the content of my cards, specifically the first or last name
-   * I have the data/content of my cards saved in the global variable results
-   * 
-   * I need to loop through my cards and test each one, then show / hide depending on the first or last name content
-   */
+}
 
 
-  for (let i = 0; i < names.length; i++ ) {
+/**
+ * 
+ * I need my if else to test whether the text entered matches the content of my cards, specifically the first or last name
+ * I have the data/content of my cards saved in the global variable results
+ * 
+ * I need to loop through my cards and test each one, then show / hide depending on the first or last name content
+ */
 
-    const txtValue = searchInput.textContent || searchInput.innerText; 
+const createSearchAction = (e, data) => {
+
+  console.log(e, data);
+ 
+  const query = e.target.value;
+  console.log(query); 
+
+  // loop through data, check if the text entered matches it
+  const inputToTest = data[0].user.first || data[0].user.last; 
+
+
+  data.forEach(
+
     
-    // indexOf returns the first index at which a given element can be found in the array
-    if (txtValue.toUpperCase().indexOf(filter) > -1 ) {
-  
-      console.log('Show the specific user card here!')
-      cards[i].style.display = "";
-  
-    } else {
-  
-      searchInput.innerHTML = 'No matches, sorry!';
-      cards[i].style.display = "none"; 
-  
-    }
+    // loop through the data, test to see if it matches my const query
 
+  )
+
+  // select the search input field
+  const searchInput = document.getElementById('search-input');
+
+
+
+  
+  for (let i = 0; i < data.length; i++) {
+
+    if ( inputToTest[i].includes(e.target.value ) ) {
+
+      console.log('The input matches the card'); 
+
+      // cards[i].classList.add('visible');
+      // cards[i].classList.remove('hidden');
+
+
+    } else {
+
+      // cards[i].classList.remove('visible');
+      // cards[i].classList.add('hidden'); 
+      user.visible = false
+    }
   }
+
+  
+
+
+
 
 }
 
 
+
 // const createModalCard = (data) => {
 
-//   data.forEach(user => {
+//    data.forEach(user => {
 
 //     // Setup modal in the DOM
 //     const modalContainer = document.createElement("div");
@@ -147,57 +175,74 @@ const createSearchBar = (data) => {
 
 const modalEvents = (data) => {
 
-// Setup event listener for card
-// desired behaviour: when clicked, the modal for that card opens, the modal is then closed by hitting the X
-const cards = document.querySelectorAll(".card");
-// const modal = document.querySelectorAll(".modal");
-// console.log(modal); 
+  // Setup event listener for card
+  // desired behaviour: when clicked, the modal for that card opens, the modal is then closed by hitting the X
+  const cards = document.querySelectorAll(".card");
+  // const modal = document.querySelectorAll(".modal");
+  // console.log(modal); 
 
-cards.forEach(function (card) {
-  // console.log(card);
-  // addEventListener can only be invoked on a single node at a time
-  card.addEventListener('click', (e) => {
-    const clickedCard = e.target;
-    // console.log(clickedCard);
-    if (clickedCard) {
-      //  modal.style.display = 'block';
-      console.log('card has been clicked, now show the modal!'); 
-    } else {
-      console.log('card hasn\'t been clicked, carry on!'); 
-      //  modal.style.display = 'none';
-      // clickedCard.style.display = 'flex';
-    }
+  cards.forEach(function (card) {
+    // console.log(card);
+    // addEventListener can only be invoked on a single node at a time
+    card.addEventListener('click', (e) => {
+      const clickedCard = e.target;
+      // console.log(clickedCard);
+      if (clickedCard) {
+        //  modal.style.display = 'block';
+        console.log('card has been clicked, now show the modal!');
+      } else {
+        console.log('card hasn\'t been clicked, carry on!');
+        //  modal.style.display = 'none';
+        // clickedCard.style.display = 'flex';
+      }
+    })
   })
-})
 
 
 
 
 
 
-// Setup event listener on the modal
-// modal.addEventListener('click', (e) => {
-//   const event2 = event.target;
-//   const close = modal.getElementById("modal-close-btn");
+  // Setup event listener on the modal
+  // modal.addEventListener('click', (e) => {
+  //   const event2 = event.target;
+  //   const close = modal.getElementById("modal-close-btn");
 
-//   if (event2 === close || close.innerHTML === 'X') {
-//     modal.style.display = 'none';
-//     card.style.display = 'flex';
-//   } else {
-//     modal.style.display = 'block';
-//     card.style.display = 'none';
-//   }
-// })
+  //   if (event2 === close || close.innerHTML === 'X') {
+  //     modal.style.display = 'none';
+  //     card.style.display = 'flex';
+  //   } else {
+  //     modal.style.display = 'block';
+  //     card.style.display = 'none';
+  //   }
+  // })
 }
 
 
 
-
+createSearchBar();
 fetchRequest(urlRequest)
-  .then(createUserCard)
-  .then(createSearchBar)
-  // .then(createModalCard)
-  .then(modalEvents)
+
+  .then((data) => {
+    
+    createUserCard(data);
+
+    console.log(data);
+
+    modalEvents(data);
+
+    // call function that sets up change listener on input
+    const input = document.getElementById('search-input');
+    
+    input.addEventListener('keydown', (e) => {
+      
+      createSearchAction(e, data); 
+    })
+
+ 
+
+
+  })
   .catch(error => {
     const errorPage = document.querySelector('.error');
     errorPage.style.display = 'flex';
