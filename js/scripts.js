@@ -66,14 +66,17 @@ const createSearchBar = () => {
 
 const createSearchAction = (e, data) => {
 
-  const query = e.target.value;
+  // need to convert both to lower case or upper case because otherwise they'll never match
+  const query = e.target.value.toLowerCase();
+  
 
   data.forEach(user => {
 
     // for each card, test if the data matches the const query
     // if it does, add a class of visible and set user visible to true
     // search through data first and last name, and test if it matches the characters entered
-    if (user.name.first.includes(query) || user.name.last.includes(query)) {
+    if (user.name.first.toLowerCase().includes(query) || user.name.last.toLowerCase().includes(query)) {
+      
       console.log(user.name.first);
       user.cardElement.style.display = 'flex';
       user.visible = true;
