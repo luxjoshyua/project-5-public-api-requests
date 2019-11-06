@@ -68,24 +68,16 @@ const createSearchAction = (e, data) => {
 
   const query = e.target.value;
 
-
-  console.log(query);
-
-
-
-
   data.forEach(user => {
 
-    console.log(user);
     // for each card, test if the data matches the const query
     // if it does, add a class of visible and set user visible to true
-
     // search through data first and last name, and test if it matches the characters entered
     if (user.name.first.includes(query) || user.name.last.includes(query)) {
       console.log(user.name.first);
       user.cardElement.style.display = 'flex';
       user.visible = true;
-      // console.log('Show this ${user} card!')
+      
     } else {
       // if it doesn't, add a class of hidden and set user visible to false
       user.visible = false;
@@ -93,6 +85,7 @@ const createSearchAction = (e, data) => {
     }
   })
 }
+
 
 
 
