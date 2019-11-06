@@ -32,7 +32,7 @@ const createUserCard = (data) => {
   })
 }
 
-// user is the object {} and
+// user is the object {}
 
 /**
  * create the searchbar functionality 
@@ -66,168 +66,164 @@ const createSearchBar = () => {
 
 const createSearchAction = (e, data) => {
 
-    const query = e.target.value;
+  const query = e.target.value;
 
-    console.log(query + 'this is capturing the key events!');
 
-    console.log(data); // this is capturing the expected data
-    console.log(data[0].name);
+  console.log(query);
 
-    data.forEach(user => {
 
-        // for each card, test if the data matches the const query
-        // if it does, add a class of visible and set user visible to true
 
-        // the problem is that it's just testing one character, I need to set a range for the whole name like query 0-9 or charAt(0)
-      console.log(user);
 
-        if (user.name.first.includes(query) || user.name.last.includes(query) ) {
+  data.forEach(user => {
 
-          console.log('Show the card!')
-          user.visible = true;
+    console.log(user);
+    // for each card, test if the data matches the const query
+    // if it does, add a class of visible and set user visible to true
 
-          user.classList.add('visible'); 
-          user.style.backgroundColor = 'red'
-        }
-        
-
-        // else {
-        //   // if it doesn't, add a class of hidden and set user visible to false
-        //   card.visible = false;
-        //   card.classList.add('hidden'); 
-        // }
-      })
+    // search through data first and last name, and test if it matches the characters entered
+    if (user.name.first.includes(query) || user.name.last.includes(query)) {
+      console.log(user.name.first);
+      user.cardElement.style.display = 'flex';
+      user.visible = true;
+      // console.log('Show this ${user} card!')
+    } else {
+      // if it doesn't, add a class of hidden and set user visible to false
+      user.visible = false;
+      user.cardElement.style.display = 'none';
     }
+  })
+}
 
 
 
 
 
-    // const createModalCard = (data) => {
+// const createModalCard = (data) => {
 
-    //    data.forEach(user => {
+//    data.forEach(user => {
 
-    //     // Setup modal in the DOM
-    //     const modalContainer = document.createElement("div");
-    //     modalContainer.classList.add("modal-container");
-    //     document.body.appendChild(modalContainer);
-    //     // Set the modal HTML
-    //     modalContainer.innerHTML =
-    //       `
-    //       <div class="modal">
-    //         <button type="button" id="modal-close-btn" class="modal-close-btn">
-    //           <strong>X</strong>
-    //         </button>
-    //         <div class="modal-info-container">
-    //             <img class="modal-img" src="${user.picture.medium}" alt="profile picture">
-    //             <h3 id="name" class="modal-name cap">
-    //             ${user.name.first}
-    //             ${user.name.last}
-    //             </h3>
-    //             <p class="modal-text">
-    //             ${user.email}
-    //             </p>
-    //             <p class="modal-text cap">
-    //              ${user.location.city}
-    //             </p>
-    //             <hr>
-    //             <p class="modal-text">${user.cell}</p>
-    //             <p class="modal-text">
-    //             ${user.street.number}
-    //             ${user.street.name}
-    //             ${user.city}
-    //             ${user.postcode}
-    //             </p>
-    //             <p class="modal-text">Birthday: ${user.dob.date}</p>
-    //         </div>
-    //     `
-    //   })
-    // }
-
-
-    const modalEvents = (data) => {
-
-      // Setup event listener for card
-      // desired behaviour: when clicked, the modal for that card opens, the modal is then closed by hitting the X
-
-      cards.forEach(function (card) {
-        // console.log(card);
-        // addEventListener can only be invoked on a single node at a time
-        card.addEventListener('click', (e) => {
-          const clickedCard = e.target;
-          // console.log(clickedCard);
-          if (clickedCard) {
-            //  modal.style.display = 'block';
-            // console.log('card has been clicked, now show the modal!');
-            clickedCard.style.backgroundColor = 'red';
-          } else {
-
-            //  modal.style.display = 'none';
-            // clickedCard.style.display = 'flex';
-          }
-        })
-      })
+//     // Setup modal in the DOM
+//     const modalContainer = document.createElement("div");
+//     modalContainer.classList.add("modal-container");
+//     document.body.appendChild(modalContainer);
+//     // Set the modal HTML
+//     modalContainer.innerHTML =
+//       `
+//       <div class="modal">
+//         <button type="button" id="modal-close-btn" class="modal-close-btn">
+//           <strong>X</strong>
+//         </button>
+//         <div class="modal-info-container">
+//             <img class="modal-img" src="${user.picture.medium}" alt="profile picture">
+//             <h3 id="name" class="modal-name cap">
+//             ${user.name.first}
+//             ${user.name.last}
+//             </h3>
+//             <p class="modal-text">
+//             ${user.email}
+//             </p>
+//             <p class="modal-text cap">
+//              ${user.location.city}
+//             </p>
+//             <hr>
+//             <p class="modal-text">${user.cell}</p>
+//             <p class="modal-text">
+//             ${user.street.number}
+//             ${user.street.name}
+//             ${user.city}
+//             ${user.postcode}
+//             </p>
+//             <p class="modal-text">Birthday: ${user.dob.date}</p>
+//         </div>
+//     `
+//   })
+// }
 
 
+const modalEvents = (data) => {
 
+  // Setup event listener for card
+  // desired behaviour: when clicked, the modal for that card opens, the modal is then closed by hitting the X
 
+  cards.forEach(function (card) {
+    // console.log(card);
+    // addEventListener can only be invoked on a single node at a time
+    card.addEventListener('click', (e) => {
+      const clickedCard = e.target;
+      // console.log(clickedCard);
+      if (clickedCard) {
+        //  modal.style.display = 'block';
+        // console.log('card has been clicked, now show the modal!');
+        clickedCard.style.backgroundColor = 'red';
+      } else {
 
-
-      // Setup event listener on the modal
-      // modal.addEventListener('click', (e) => {
-      //   const event2 = event.target;
-      //   const close = modal.getElementById("modal-close-btn");
-
-      //   if (event2 === close || close.innerHTML === 'X') {
-      //     modal.style.display = 'none';
-      //     card.style.display = 'flex';
-      //   } else {
-      //     modal.style.display = 'block';
-      //     card.style.display = 'none';
-      //   }
-      // })
-    }
-
-
-
-    // Handle fetch request to get the list of employees
-    async function fetchRequest(url) {
-      try {
-        const request = await fetch(url);
-        const response = await request.json();
-        return Promise.all(response.results);
-      } catch (error) {
-        gallery.innerHTML = `An error occured fetching the data, ${error}`;
+        //  modal.style.display = 'none';
+        // clickedCard.style.display = 'flex';
       }
-    }
-
-    // Call my functions
-    createSearchBar();
-    fetchRequest(urlRequest)
-      .then((data) => {
-        createUserCard(data);
-        // console.log(data);
-        modalEvents(data);
-
-        // call function that sets up change listener on input
-        const input = document.getElementById('search-input');
-
-        input.addEventListener('keydown', (e) => {
-          createSearchAction(e, data);
-        })
-      })
-      .catch(error => {
-        const errorPage = document.querySelector('.error');
-        errorPage.style.display = 'flex';
-        console.log('Our apologies but there is a' + error + 'with our API, it will be back up and running shortly!')
-      });
+    })
+  })
 
 
 
 
-    /**
-       * === JUNK CODE ====
-       * 
-       * 
 
-       */
+
+  // Setup event listener on the modal
+  // modal.addEventListener('click', (e) => {
+  //   const event2 = event.target;
+  //   const close = modal.getElementById("modal-close-btn");
+
+  //   if (event2 === close || close.innerHTML === 'X') {
+  //     modal.style.display = 'none';
+  //     card.style.display = 'flex';
+  //   } else {
+  //     modal.style.display = 'block';
+  //     card.style.display = 'none';
+  //   }
+  // })
+}
+
+
+
+// Handle fetch request to get the list of employees
+async function fetchRequest(url) {
+  try {
+    const request = await fetch(url);
+    const response = await request.json();
+    return Promise.all(response.results);
+  } catch (error) {
+    gallery.innerHTML = `An error occured fetching the data, ${error}`;
+  }
+}
+
+// Call my functions
+createSearchBar();
+fetchRequest(urlRequest)
+  .then((data) => {
+    createUserCard(data);
+    // console.log(data);
+    modalEvents(data);
+
+    // call function that sets up change listener on input
+    const input = document.getElementById('search-input');
+
+    input.addEventListener('keydown', (e) => {
+      createSearchAction(e, data);
+    })
+  })
+
+  .catch(error => {
+    const errorPage = document.querySelector('.error');
+    errorPage.style.display = 'flex';
+    console.log('Our apologies but there is a' + error + 'with our API, it will be back up and running shortly!')
+  });
+
+
+
+
+/**
+   * === JUNK CODE ====
+   * 
+   * 
+
+   */
