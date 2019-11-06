@@ -32,7 +32,7 @@ const createUserCard = (data) => {
   })
 }
 
-
+// user is the object {} and
 
 /**
  * create the searchbar functionality 
@@ -69,20 +69,25 @@ const createSearchAction = (e, data) => {
     const query = e.target.value;
 
     console.log(query + 'this is capturing the key events!');
-    console.log(data); // this is capturing the expected data
-    // console.log(data[0].name);
 
-    cards.forEach(card => {
+    console.log(data); // this is capturing the expected data
+    console.log(data[0].name);
+
+    data.forEach(user => {
 
         // for each card, test if the data matches the const query
         // if it does, add a class of visible and set user visible to true
 
         // the problem is that it's just testing one character, I need to set a range for the whole name like query 0-9 or charAt(0)
+      console.log(user);
 
-        if (data.includes(query)) {
+        if (user.name.first.includes(query) || user.name.last.includes(query) ) {
+
           console.log('Show the card!')
-          // card.visible = true;
-          // card.classList.add('visible'); 
+          user.visible = true;
+
+          user.classList.add('visible'); 
+          user.style.backgroundColor = 'red'
         }
         
 
