@@ -5,6 +5,8 @@ const gallery = document.getElementById("gallery");
 // select the cards
 const cards = document.querySelectorAll('.card');
 
+// ==== the arguments are passed to the function like through a tunnel!!!!! ====
+
 
 // create the 12 user cards on initial load
 const createUserCard = (data) => {
@@ -28,8 +30,17 @@ const createUserCard = (data) => {
     `
     user.cardElement = cardContainerDiv;
     user.visible = true;
+
+    // call create modal function on specific card click
+    cardContainerDiv.addEventListener('click', (e) => {
+      // console.log(e);
+      // pass the event and the user that has been clicked
+      createModalCard(e, user);
+    })
   })
 }
+
+
 
 // user is the object {}
 
@@ -51,8 +62,6 @@ const createSearchBar = () => {
     </form>
     `
 }
-
-
 
 
 
@@ -81,93 +90,68 @@ const createSearchAction = (e, data) => {
   })
 }
 
+/**
+ * 
+ * @param {*} e 
+ * @param {*} data 
+ */
 
-
-const createModalCard = (e, data) => {
-  const click = e.target; 
-  // loop through each user
-  data.forEach(user => {
-
-    // Setup modal in the DOM
-    const modalContainer = document.createElement("div");
-    modalContainer.classList.add("modal-container");
-    document.body.appendChild(modalContainer);
-    console.log(user.name.first); 
-    // Set the modal HTML
-    modalContainer.innerHTML =
-      `
+const createModalCard = () => {
+  // Setup modal in the DOM
+  const modalContainer = document.createElement("div");
+  modalContainer.classList.add("modal-container");
+  document.body.appendChild(modalContainer);
+  console.log(user.name.first);
+  // Set the modal HTML
+  modalContainer.innerHTML =
+    `
       <div class="modal">
         <button type="button" id="modal-close-btn" class="modal-close-btn">
           <strong>X</strong>
         </button>
         <div class="modal-info-container">
-            <img class="modal-img" src="${user.picture.medium}" alt="profile picture">
+            <img class="modal-img" src="" alt="profile picture">
             <h3 id="name" class="modal-name cap">
-            ${user.name.first}
-            ${user.name.last}
+           
             </h3>
             <p class="modal-text">
-            ${user.email}
+         
             </p>
             <p class="modal-text cap">
-             ${user.location.city}
+           
             </p>
             <hr>
-            <p class="modal-text">${user.cell}</p>
+            <p class="modal-text"></p>
             <p class="modal-text">
-            ${user.street.number}
-            ${user.street.name}
-            ${user.city}
-            ${user.postcode}
+          
             </p>
-            <p class="modal-text">Birthday: ${user.dob.date}</p>
+            <p class="modal-text">Birthday: </p>
         </div>
     `
+
+  // close the modal
+  const closeModal = document.getElementById('modal-close-btn');
+  closeModal.addEventListener('click', (e) => {
+    const e = event.target
+    // remember: addEventListener can only be invoked on a single node at a time
+    modalContainer.style.display = 'none';
   })
 }
 
+const clickedModal = (e, data) => {
 
-// const modalEvents = (data) => {
+  // get the element, 
+  // setup event listener on element, 
+  // on click hide the modal show the cards
 
-//   // Setup event listener for card
-//   // desired behaviour: when clicked, the modal for that card opens, the modal is then closed by hitting the X
 
-//   cards.forEach(function (card) {
-//     // console.log(card);
-//     // addEventListener can only be invoked on a single node at a time
-//     card.addEventListener('click', (e) => {
-//       const clickedCard = e.target;
-//       // console.log(clickedCard);
-//       if (clickedCard) {
-//         //  modal.style.display = 'block';
-//         // console.log('card has been clicked, now show the modal!');
-//         clickedCard.style.backgroundColor = 'red';
-//       } else {
+}
 
-//         //  modal.style.display = 'none';
-//         // clickedCard.style.display = 'flex';
-//       }
-//     })
-//   })
-//   // Setup event listener on the modal
-//   // modal.addEventListener('click', (e) => {
-//   //   const event2 = event.target;
-//   //   const close = modal.getElementById("modal-close-btn");
 
-//   //   if (event2 === close || close.innerHTML === 'X') {
-//   //     modal.style.display = 'none';
-//   //     card.style.display = 'flex';
-//   //   } else {
-//   //     modal.style.display = 'block';
-//   //     card.style.display = 'none';
-//   //   }
-//   // })
-// }
 
 
 
 // Handle fetch request to get the list of employees
-
 
 async function fetchRequest(url) {
   try {
@@ -202,13 +186,3 @@ fetchRequest(urlRequest)
     errorPage.style.display = 'flex';
     console.log('Our apologies but there is a' + error + 'with our API, it will be back up and running shortly!')
   });
-
-
-
-
-/**
-   * === JUNK CODE ====
-   * 
-   * 
-
-   */
