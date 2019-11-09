@@ -126,26 +126,38 @@ const createModalCard = () => {
           
             </p>
             <p class="modal-text">Birthday: </p>
+
+            <div class="modal-btn-container">
+                <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+                <button type="button" id="modal-next" class="modal-next btn">Next</button>
+            </div>
         </div>
     `
 
-  // close the modal
+  // close the modal window
   const closeModal = document.getElementById('modal-close-btn');
-  closeModal.addEventListener('click', (e) => {
-    const e = event.target
-    // remember: addEventListener can only be invoked on a single node at a time
-    modalContainer.style.display = 'none';
-  })
+  console.log(closeModal);
+
+  // closeModal.addEventListener('click', (e) => {
+    
+  //   const e = event.target
+
+  //   console.log(e);
+
+  //   // remember: addEventListener can only be invoked on a single node at a time
+  //   modalContainer.style.display = 'none';
+  // })
 }
 
-const clickedModal = (e, data) => {
-
-  // get the element, 
-  // setup event listener on element, 
-  // on click hide the modal show the cards
+// const clickedModal = (e, data) => {
 
 
-}
+//   // get the element, 
+//   // setup event listener on element, 
+//   // on click hide the modal show the cards
+
+
+// }
 
 
 
