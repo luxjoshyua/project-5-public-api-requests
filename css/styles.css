@@ -69,6 +69,23 @@ header h1 {
 /* ===================================== 
    Gallery
 ======================================== */
+.dark-mode-toggle {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    max-width: 40px;
+    background-color: #fff;
+}
+
+.darkmode {
+    background-color: #000;
+    color: #fff;
+}
+
+
+/* ===================================== 
+   Gallery
+======================================== */
 
 .gallery {
     display: flex;

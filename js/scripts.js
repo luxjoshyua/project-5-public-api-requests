@@ -6,9 +6,77 @@ const gallery = document.getElementById("gallery");
 const cards = document.querySelectorAll('.card');
 
 // ==== the arguments are passed to the function like through a tunnel!!!!! ====
+// user is the object {}
 
 
-// create the 12 user cards on initial load
+
+/**
+ * 
+ * CSS Extra Features to Do
+ *  1. Add loading screen
+ *  2. Add API error screen
+ *  3. Add dark mode, use this tutorial https://www.youtube.com/watch?v=wodWDIdV9BY
+ */
+
+
+/**
+ * 
+ * darkmode function
+ */
+
+//  check if user has local dark mode settings
+// update dark mode every time someone clicks on it
+let darkMode = localStorage.getItem('darkmode');
+const darkModeToggle = document.querySelector("#dark-mode-toggle");
+
+// check if dark mode is enabled,
+// it it's enabled, turn it off,
+// if it's disabled, turn it on
+const enableDarkMode = () => {
+  // 1. add the class darkmode to the body
+  document.body.classList.add("darkmode");
+  // 2. update darkMode in the localStorage so it remembers
+  localStorage.setItem("darkMode", "enabled");
+}
+
+const disableDarkMode = () => {
+  // 1. remove the class darkmode to the body
+  document.body.classList.remove('darkmode');
+  // 2. update darkMode in the localStorage so it remembers
+  localStorage.setItem('darkMode', null);
+}
+
+if (darkMode === "enabled") {
+  enableDarkMode(); 
+}
+
+// When someone clicks the button
+darkModeToggle.addEventListener('click', () => {
+  // get their darkMode setting
+  darkMode = localStorage.getItem('darkMode'); 
+  // if it not current enabled, enable it
+  if (darkMode !== 'enabled') {
+    enableDarkMode();
+  // if it has been enabled, turn it off  
+  } else {  
+    disableDarkMode(); 
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * @param {data} create the 12 user cards on load, 
+ * populate it with the data fetched
+ */
 const createUserCard = (data) => {
   // loop through each user and populate the card with the fetched data
   data.forEach(user => {
@@ -30,7 +98,6 @@ const createUserCard = (data) => {
     `
     user.cardElement = cardContainerDiv;
     user.visible = true;
-
     // call create modal function on specific card click
     cardContainerDiv.addEventListener('click', (e) => {
       // call the modal you want and populate with user
@@ -40,15 +107,10 @@ const createUserCard = (data) => {
 }
 
 
-
-// user is the object {}
-
 /**
- * create the searchbar functionality 
- * What it needs to do:
- *  Search for people already on the page, so you're not adding a new API request, just using the one already made
+ * setup the searchbar in the DOM, the actual functionality is handled in
+ * the createSearchAction function below
  */
-
 const createSearchBar = () => {
   // add the search to the DOM
   const searchContainer = document.querySelector('.search-container');
@@ -63,9 +125,7 @@ const createSearchBar = () => {
 }
 
 
-
 /**
- * 
  * @param {e} capture the user event 
  * @param {data} pass the data to test, better than looking at the DOM names, more reliable
  */
@@ -90,11 +150,9 @@ const createSearchAction = (e, data) => {
 }
 
 /**
- * 
- * @param {*} e 
- * @param {*} data 
+ * Sets up the modal in the DOM, doesn't contain any parameters as I populate it with the user data
+ * in the clickedModal function below
  */
-
 const createModalCard = () => {
   // Setup modal in the DOM
   const modalContainer = document.createElement("div");
@@ -126,7 +184,6 @@ const createModalCard = () => {
             </div>
         </div>
     `
-
   // close the modal window
   const closeModal = document.getElementById('modal-close-btn');
   closeModal.addEventListener('click', (e) => {
@@ -135,6 +192,10 @@ const createModalCard = () => {
   })
 }
 
+/**
+ * @param {user} is the user card that has been clicked, 
+ * populate it with the data already fetched
+ */
 const clickedModal = (user) => {
   const modalContainer = document.querySelector('.modal-container');
   modalContainer.style.display = 'block';
@@ -145,13 +206,33 @@ const clickedModal = (user) => {
   modal.querySelector('.modal-cap').innerHTML = user.location.city;
   modal.querySelector('.modal-number').innerHTML = user.phone;
   modal.querySelector('.modal-address').innerHTML = user.location.street.number + ' ' + user.location.street.name + ' ' + user.location.state + ' ' + user.location.postcode;
-  modal.querySelector('.modal-birthday').innerHTML = "Birthday: " + user.dob.date.slice(0,10);
+  modal.querySelector('.modal-birthday').innerHTML = "Birthday: " + user.dob.date.slice(0, 10);
+}
+
+// when the modal window is open, I need to toggle back and forth bewtween the employees fetched
+
+// there should be no errors once the end or beginning of the list is reached
+
+const modalToggle = (user) => {
+
+
+  // 1. Select the left and right hand arrows
+
+
+  // 2. Setup event listeners on both, make sure they're logging the correct result
+
+
+
+  // 3. iterate through the length of cards, getting each cards index position
+
+
+
+  // 4. If the user clicks right, show the indexOf + 1, if they click back, show the indexOf - 1
 
 
 
 
 }
-
 
 
 
@@ -173,13 +254,11 @@ fetchRequest(urlRequest)
   .then((data) => {
     createUserCard(data);
     createModalCard();
-
     // call function that sets up change listener on input
     const input = document.getElementById('search-input');
     input.addEventListener('keydown', (e) => {
       createSearchAction(e, data);
     })
-
   })
 
   .catch(error => {
