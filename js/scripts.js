@@ -33,9 +33,8 @@ const createUserCard = (data) => {
 
     // call create modal function on specific card click
     cardContainerDiv.addEventListener('click', (e) => {
-      // console.log(e);
-      // pass the event and the user that has been clicked
-      createModalCard(e, user);
+      // call the modal you want and populate with user
+      clickedModal(user);
     })
   })
 }
@@ -100,8 +99,8 @@ const createModalCard = () => {
   // Setup modal in the DOM
   const modalContainer = document.createElement("div");
   modalContainer.classList.add("modal-container");
+  modalContainer.style.display = 'none';
   document.body.appendChild(modalContainer);
-  console.log(user.name.first);
   // Set the modal HTML
   modalContainer.innerHTML =
     `
@@ -114,18 +113,12 @@ const createModalCard = () => {
             <h3 id="name" class="modal-name cap">
            
             </h3>
-            <p class="modal-text">
-         
-            </p>
-            <p class="modal-text cap">
-           
-            </p>
+            <p class="modal-text modal-email"></p>
+            <p class="modal-text modal-cap"></p>
             <hr>
-            <p class="modal-text"></p>
-            <p class="modal-text">
-          
-            </p>
-            <p class="modal-text">Birthday: </p>
+            <p class="modal-text modal-number"></p>
+            <p class="modal-text modal-address"></p>
+            <p class="modal-text modal-birthday">Birthday: </p>
 
             <div class="modal-btn-container">
                 <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
@@ -136,35 +129,34 @@ const createModalCard = () => {
 
   // close the modal window
   const closeModal = document.getElementById('modal-close-btn');
-  console.log(closeModal);
-
-  // closeModal.addEventListener('click', (e) => {
-    
-  //   const e = event.target
-
-  //   console.log(e);
-
-  //   // remember: addEventListener can only be invoked on a single node at a time
-  //   modalContainer.style.display = 'none';
-  // })
+  closeModal.addEventListener('click', (e) => {
+    // remember: addEventListener can only be invoked on a single node at a time
+    modalContainer.style.display = 'none';
+  })
 }
 
-// const clickedModal = (e, data) => {
+const clickedModal = (user) => {
+  const modalContainer = document.querySelector('.modal-container');
+  modalContainer.style.display = 'block';
+  const modal = document.querySelector('.modal');
+  modal.querySelector('.modal-img').src = user.picture.medium;
+  modal.querySelector('.modal-name').innerHTML = user.name.first + ' ' + user.name.last;
+  modal.querySelector('.modal-email').innerHTML = user.email;
+  modal.querySelector('.modal-cap').innerHTML = user.location.city;
+  modal.querySelector('.modal-number').innerHTML = user.phone;
+  modal.querySelector('.modal-address').innerHTML = user.location.street.number + ' ' + user.location.street.name + ' ' + user.location.state + ' ' + user.location.postcode;
+  modal.querySelector('.modal-birthday').innerHTML = "Birthday: " + user.dob.date.slice(0,10);
 
 
-//   // get the element, 
-//   // setup event listener on element, 
-//   // on click hide the modal show the cards
 
 
-// }
+}
 
 
 
 
 
 // Handle fetch request to get the list of employees
-
 async function fetchRequest(url) {
   try {
     const request = await fetch(url);
@@ -180,8 +172,7 @@ createSearchBar();
 fetchRequest(urlRequest)
   .then((data) => {
     createUserCard(data);
-    // console.log(data);
-    // modalEvents(data);
+    createModalCard();
 
     // call function that sets up change listener on input
     const input = document.getElementById('search-input');
@@ -189,8 +180,6 @@ fetchRequest(urlRequest)
       createSearchAction(e, data);
     })
 
-    // call create modal function
-    // createModalCard(data);
   })
 
   .catch(error => {
