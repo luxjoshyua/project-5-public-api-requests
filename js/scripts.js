@@ -47,19 +47,19 @@ const disableDarkMode = () => {
 }
 
 if (darkMode === "enabled") {
-  enableDarkMode(); 
+  enableDarkMode();
 }
 
 // When someone clicks the button
 darkModeToggle.addEventListener('click', () => {
   // get their darkMode setting
-  darkMode = localStorage.getItem('darkMode'); 
+  darkMode = localStorage.getItem('darkMode');
   // if it not current enabled, enable it
   if (darkMode !== 'enabled') {
     enableDarkMode();
-  // if it has been enabled, turn it off  
-  } else {  
-    disableDarkMode(); 
+    // if it has been enabled, turn it off  
+  } else {
+    disableDarkMode();
   }
 });
 
@@ -79,7 +79,8 @@ darkModeToggle.addEventListener('click', () => {
  */
 const createUserCard = (data) => {
   // loop through each user and populate the card with the fetched data
-  data.forEach(user => {
+  // second parameter i = index, index is where you are at currently in the loop
+  data.forEach((user, i) => {
     // Setup card in the DOM
     const cardContainerDiv = document.createElement("div");
     cardContainerDiv.classList.add("card");
@@ -101,7 +102,10 @@ const createUserCard = (data) => {
     // call create modal function on specific card click
     cardContainerDiv.addEventListener('click', (e) => {
       // call the modal you want and populate with user
-      clickedModal(user);
+      clickedModal(user, i);
+
+      // get the index position of this clicked user, assign to my global index
+
     })
   })
 }
@@ -153,7 +157,7 @@ const createSearchAction = (e, data) => {
  * Sets up the modal in the DOM, doesn't contain any parameters as I populate it with the user data
  * in the clickedModal function below
  */
-const createModalCard = () => {
+const createModalCard = (data) => {
   // Setup modal in the DOM
   const modalContainer = document.createElement("div");
   modalContainer.classList.add("modal-container");
@@ -190,13 +194,35 @@ const createModalCard = () => {
     // remember: addEventListener can only be invoked on a single node at a time
     modalContainer.style.display = 'none';
   })
+
+  // setup event listeners here for left and right arrows
+  const left = document.getElementById("modal-prev");
+  const right = document.getElementById("modal-next");
+
+  left.addEventListener("click", (e) => {
+    // console.log("click left");
+    // -1 means go back one modal
+    cycleModal(data, -1)
+
+  })
+
+  right.addEventListener("click", (e) => {
+    // +1 means go forward one modal 
+    cycleModal(data, 1)
+    // console.log("click right");
+
+
+  })
+
 }
 
 /**
  * @param {user} is the user card that has been clicked, 
  * populate it with the data already fetched
  */
-const clickedModal = (user) => {
+const clickedModal = (user, i) => {
+  // current position in the loop
+  index = i;
   const modalContainer = document.querySelector('.modal-container');
   modalContainer.style.display = 'block';
   const modal = document.querySelector('.modal');
@@ -213,23 +239,55 @@ const clickedModal = (user) => {
 
 // there should be no errors once the end or beginning of the list is reached
 
-const modalToggle = (user) => {
+// direction parameter = left or right
+
+const cycleModal = (data, direction) => {
+
+  // the index is the current position of the card
+
+  console.log("I am the current index position of " + index);
+
+  // console.log(direction);
+
+  if (direction === 1) {
+
+    // show data forward
+    console.log(direction + " and forward card");
+
+    // console.log(data);
+
+    // I need to move one forward using the data and index
+
+    const newIndex = index + 1;
+    clickedModal(data[newIndex], newIndex );
+
+    // console.log(data[newIndex], newIndex);
 
 
-  // 1. Select the left and right hand arrows
-
-
-  // 2. Setup event listeners on both, make sure they're logging the correct result
 
 
 
-  // 3. iterate through the length of cards, getting each cards index position
+    // the index position + 1
 
 
 
-  // 4. If the user clicks right, show the indexOf + 1, if they click back, show the indexOf - 1
 
 
+  } else if (direction === -1) {
+
+    // move one back by minusing one from the index
+
+    //  createModalCard(data, index);
+
+    console.log(data);
+
+
+    // show data back
+    console.log(direction + "and previous card")
+
+
+
+  }
 
 
 }
@@ -249,11 +307,13 @@ async function fetchRequest(url) {
 }
 
 // Call my functions
+let index = null;
+
 createSearchBar();
 fetchRequest(urlRequest)
   .then((data) => {
     createUserCard(data);
-    createModalCard();
+    createModalCard(data);
     // call function that sets up change listener on input
     const input = document.getElementById('search-input');
     input.addEventListener('keydown', (e) => {
