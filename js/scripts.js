@@ -235,23 +235,37 @@ const clickedModal = (user, i) => {
 const cycleModal = (data, direction) => {
 
   // the index is the current position of the card
-  console.log("I am the current index position of " + index);
+  // console.log("I am the current index position of " + index);
 
-  // console.log(direction);
   if (direction === 1) {
-    // show data forward
-    console.log(direction + " and forward card");
-    // I need to move one forward using the data and index
-    // the index position + 1
+    // newIndex = the index position + 1
     const newIndex = index + 1;
-    clickedModal(data[newIndex], newIndex );
-    // console.log(data[newIndex], newIndex);
+
+    if (newIndex < 12) {
+      clickedModal(data[newIndex], newIndex);
+      console.log(newIndex);
+
+    }
+
+  
+
+
+    // console.log("I am modal position " + index);
+   
+
+
+
+
 
   } else if (direction === -1) {
     // show data back
-    // console.log(direction + "and previous card")
     const newIndex = index - 1;
-    clickedModal(data[newIndex], newIndex);
+
+    if (newIndex >= 0) {
+      clickedModal(data[newIndex], newIndex);
+    }
+    
+    
   }
 
 }
