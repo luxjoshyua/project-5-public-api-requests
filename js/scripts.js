@@ -110,7 +110,6 @@ const createUserCard = (data) => {
   })
 }
 
-
 /**
  * setup the searchbar in the DOM, the actual functionality is handled in
  * the createSearchAction function below
@@ -127,7 +126,6 @@ const createSearchBar = () => {
     </form>
     `
 }
-
 
 /**
  * @param {e} capture the user event 
@@ -203,17 +201,13 @@ const createModalCard = (data) => {
     // console.log("click left");
     // -1 means go back one modal
     cycleModal(data, -1)
-
   })
 
   right.addEventListener("click", (e) => {
     // +1 means go forward one modal 
     cycleModal(data, 1)
     // console.log("click right");
-
-
   })
-
 }
 
 /**
@@ -236,64 +230,31 @@ const clickedModal = (user, i) => {
 }
 
 // when the modal window is open, I need to toggle back and forth bewtween the employees fetched
-
 // there should be no errors once the end or beginning of the list is reached
-
 // direction parameter = left or right
-
 const cycleModal = (data, direction) => {
 
   // the index is the current position of the card
-
   console.log("I am the current index position of " + index);
 
   // console.log(direction);
-
   if (direction === 1) {
-
     // show data forward
     console.log(direction + " and forward card");
-
-    // console.log(data);
-
     // I need to move one forward using the data and index
-
+    // the index position + 1
     const newIndex = index + 1;
     clickedModal(data[newIndex], newIndex );
-
     // console.log(data[newIndex], newIndex);
 
-
-
-
-
-    // the index position + 1
-
-
-
-
-
   } else if (direction === -1) {
-
-    // move one back by minusing one from the index
-
-    //  createModalCard(data, index);
-
-    console.log(data);
-
-
     // show data back
-    console.log(direction + "and previous card")
-
-
-
+    // console.log(direction + "and previous card")
+    const newIndex = index - 1;
+    clickedModal(data[newIndex], newIndex);
   }
 
-
 }
-
-
-
 
 // Handle fetch request to get the list of employees
 async function fetchRequest(url) {
