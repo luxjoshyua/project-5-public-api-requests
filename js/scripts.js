@@ -64,15 +64,6 @@ darkModeToggle.addEventListener('click', () => {
 });
 
 
-
-
-
-
-
-
-
-
-
 /**
  * @param {data} create the 12 user cards on load, 
  * populate it with the data fetched
@@ -203,17 +194,12 @@ const createModalCard = (data) => {
     // console.log("click left");
     // -1 means go back one modal
     cycleModal(data, -1)
-
   })
-
   right.addEventListener("click", (e) => {
     // +1 means go forward one modal 
     cycleModal(data, 1)
     // console.log("click right");
-
-
   })
-
 }
 
 /**
@@ -226,7 +212,7 @@ const clickedModal = (user, i) => {
   const modalContainer = document.querySelector('.modal-container');
   modalContainer.style.display = 'block';
   const modal = document.querySelector('.modal');
-  modal.querySelector('.modal-img').src = user.picture.medium;
+  modal.querySelector('.modal-img').src = user.picture.large;
   modal.querySelector('.modal-name').innerHTML = user.name.first + ' ' + user.name.last;
   modal.querySelector('.modal-email').innerHTML = user.email;
   modal.querySelector('.modal-cap').innerHTML = user.location.city;
@@ -236,63 +222,23 @@ const clickedModal = (user, i) => {
 }
 
 // when the modal window is open, I need to toggle back and forth bewtween the employees fetched
-
 // there should be no errors once the end or beginning of the list is reached
-
 // direction parameter = left or right
-
 const cycleModal = (data, direction) => {
-
   // the index is the current position of the card
-
-  console.log("I am the current index position of " + index);
-
-  // console.log(direction);
-
+  // console.log("I am the current index position of " + index);
   if (direction === 1) {
-
     // show data forward
-    console.log(direction + " and forward card");
-
-    // console.log(data);
-
-    // I need to move one forward using the data and index
-
+    // the index position + 1
     const newIndex = index + 1;
     clickedModal(data[newIndex], newIndex );
-
-    // console.log(data[newIndex], newIndex);
-
-
-
-
-
-    // the index position + 1
-
-
-
-
-
+    // console.log("my card position is " + direction);
   } else if (direction === -1) {
-
     // move one back by minusing one from the index
-
-    //  createModalCard(data, index);
-
-    console.log(data);
-
-
-    // show data back
-    console.log(direction + "and previous card")
-
-
-
+    const newIndex = index - 1;
+    clickedModal(data[newIndex], newIndex); 
   }
-
-
 }
-
-
 
 
 // Handle fetch request to get the list of employees
@@ -308,7 +254,6 @@ async function fetchRequest(url) {
 
 // Call my functions
 let index = null;
-
 createSearchBar();
 fetchRequest(urlRequest)
   .then((data) => {
@@ -319,6 +264,10 @@ fetchRequest(urlRequest)
     input.addEventListener('keydown', (e) => {
       createSearchAction(e, data);
     })
+    // the search event is fired when a search is initiated using an <input> element of type="search"
+    input.addEventListener('search', (e) => {
+      createSearchAction(e, data);
+    }); 
   })
 
   .catch(error => {
