@@ -5,64 +5,6 @@ const gallery = document.getElementById("gallery");
 // select the cards
 const cards = document.querySelectorAll('.card');
 
-// ==== the arguments are passed to the function like through a tunnel!!!!! ====
-// user is the object {}
-
-
-
-/**
- * 
- * CSS Extra Features to Do
- *  1. Add loading screen
- *  2. Add API error screen
- *  3. Add dark mode, use this tutorial https://www.youtube.com/watch?v=wodWDIdV9BY
- */
-
-
-/**
- * 
- * darkmode function
- */
-
-//  check if user has local dark mode settings
-// update dark mode every time someone clicks on it
-let darkMode = localStorage.getItem('darkmode');
-const darkModeToggle = document.querySelector("#dark-mode-toggle");
-
-// check if dark mode is enabled,
-// it it's enabled, turn it off,
-// if it's disabled, turn it on
-const enableDarkMode = () => {
-  // 1. add the class darkmode to the body
-  document.body.classList.add("darkmode");
-  // 2. update darkMode in the localStorage so it remembers
-  localStorage.setItem("darkMode", "enabled");
-}
-
-const disableDarkMode = () => {
-  // 1. remove the class darkmode to the body
-  document.body.classList.remove('darkmode');
-  // 2. update darkMode in the localStorage so it remembers
-  localStorage.setItem('darkMode', null);
-}
-
-if (darkMode === "enabled") {
-  enableDarkMode();
-}
-
-// When someone clicks the button
-darkModeToggle.addEventListener('click', () => {
-  // get their darkMode setting
-  darkMode = localStorage.getItem('darkMode');
-  // if it not current enabled, enable it
-  if (darkMode !== 'enabled') {
-    enableDarkMode();
-    // if it has been enabled, turn it off  
-  } else {
-    disableDarkMode();
-  }
-});
-
 
 /**
  * @param {data} create the 12 user cards on load, 
@@ -93,14 +35,11 @@ const createUserCard = (data) => {
     // call create modal function on specific card click
     cardContainerDiv.addEventListener('click', (e) => {
       // call the modal you want and populate with user
-      clickedModal(user, i);
-
       // get the index position of this clicked user, assign to my global index
-
+      clickedModal(user, i);
     })
   })
 }
-
 
 /**
  * setup the searchbar in the DOM, the actual functionality is handled in
@@ -118,7 +57,6 @@ const createSearchBar = () => {
     </form>
     `
 }
-
 
 /**
  * @param {e} capture the user event 
@@ -140,7 +78,6 @@ const createSearchAction = (e, data) => {
       user.visible = false;
       user.cardElement.style.display = 'none';
     }
-    return;
   })
 }
 
@@ -185,20 +122,16 @@ const createModalCard = (data) => {
     // remember: addEventListener can only be invoked on a single node at a time
     modalContainer.style.display = 'none';
   })
-
-  // setup event listeners here for left and right arrows
+  // setup event listeners for left and right arrows
   const left = document.getElementById("modal-prev");
   const right = document.getElementById("modal-next");
-
   left.addEventListener("click", (e) => {
-    // console.log("click left");
     // -1 means go back one modal
-    cycleModal(data, -1)
+    cycleModal(data, -1);
   })
   right.addEventListener("click", (e) => {
     // +1 means go forward one modal 
-    cycleModal(data, 1)
-    // console.log("click right");
+    cycleModal(data, 1);
   })
 }
 
@@ -226,20 +159,25 @@ const clickedModal = (user, i) => {
 // direction parameter = left or right
 const cycleModal = (data, direction) => {
   // the index is the current position of the card
-  // console.log("I am the current index position of " + index);
+  // go forward one modal window
   if (direction === 1) {
-    // show data forward
-    // the index position + 1
+    // newIndex = the index position + 1
     const newIndex = index + 1;
-    clickedModal(data[newIndex], newIndex );
-    // console.log("my card position is " + direction);
+    // check the modal index isn't at 12 or above, because it will break!
+    if (newIndex < 12) {
+      clickedModal(data[newIndex], newIndex);
+      // console.log(newIndex);
+    }
+    // go back one modal window
   } else if (direction === -1) {
-    // move one back by minusing one from the index
+    // show data back
     const newIndex = index - 1;
-    clickedModal(data[newIndex], newIndex); 
+    // check the modal index isn't below 0, because it will break!
+    if (newIndex >= 0) {
+      clickedModal(data[newIndex], newIndex);
+    }
   }
 }
-
 
 // Handle fetch request to get the list of employees
 async function fetchRequest(url) {

@@ -1,9 +1,7 @@
 /* ===================================== 
    Public API Request
 ======================================== */
-
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-@import url('https://fonts.googleapis.com/css?family=Archivo:400,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap');
 
 
 * {
@@ -16,10 +14,9 @@ html, body {
 }
 
 body {
-    /* font-family: "Nunito", sans-serif; */
-    font-family: 'Archivo', sans-serif;
+    font-family: 'Roboto', sans-serif;
     text-align: center;
-    background: rgba(235, 235, 235, 0.9);
+    background: rgba(211, 208, 255, 0.9);
 }
 
 header {
@@ -32,14 +29,16 @@ header {
 }
 
 header h1 {
-    font-size: 1.25em;
-    color: rgba(50, 50, 50, 0.9);
+    font-size: 2.2em;
+    color: transparent;
     margin-top: 35px;
+    -webkit-text-stroke: .5px rgba(50, 50, 50, 0.9);
 }
 
 .search-input {
     padding: 0.4rem 1rem;
-    border: 1px solid rgba(200, 200, 200, 0.9);
+    border: 2px solid rgba(200, 200, 200, 0.9);
+    background-color: transparent;
     border-radius: 0.25rem 0 0 0.25rem ;
     max-width: 20rem;
     transition: .4s ease-out;
@@ -53,9 +52,10 @@ header h1 {
 .search-submit {
     cursor: pointer;
     height: 33px;
-    background: rgba(245, 245, 245, 0.9);
+    /* background: rgba(245, 245, 245, 0.9); */
+    background-color: transparent;
     border-radius: 0 0.25rem 0.25rem 0;
-    border: 1px solid rgba(200, 200, 200, 0.9);
+    border: 2px solid rgba(200, 200, 200, 0.9);
     transition: .4s ease-out;
     outline: none;
 }
@@ -101,7 +101,8 @@ header h1 {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: flex-start;
+    justify-content: space-around;
+    align-items: center;
     cursor: pointer;
     width: 100%;
     max-width: 360px;
