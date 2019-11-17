@@ -33,6 +33,7 @@ header h1 {
     color: transparent;
     margin-top: 35px;
     -webkit-text-stroke: .5px rgba(50, 50, 50, 0.9);
+    
 }
 
 .search-input {
@@ -282,35 +283,4 @@ header h1 {
     }
 }
 
-/* ===================================== 
-  Error page
-======================================== */
-
-.error {
-    display: none !important;
-    position: absolute;
-    top: 0;
-    left: 0;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(226, 45, 45);
-    height: 100vh;
-
-}
-
-.error h1 {
-    font-size: 120px;
-    line-height: 130px;
-    text-align: center;
-}
-
-.visible {
-    display: flex;
-    border: 5px solid greenyellow;
-
-}
-
-.hidden {
-    display: none;
-}
 
