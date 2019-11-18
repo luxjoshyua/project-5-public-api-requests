@@ -200,7 +200,7 @@ fetchRequest(urlRequest)
     // call function that sets up change listener on input
     const input = document.getElementById('search-input');
     input.addEventListener('keyup', (e) => {
-      console.log("the " + e + " is doing this");
+      // console.log("the " + e + " is doing this");
       createSearchAction(e, data);
     })
     // the search event is fired when a search is initiated using an <input> element of type="search"
