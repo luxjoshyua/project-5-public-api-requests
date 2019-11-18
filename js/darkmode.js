@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * darkmode function following this https://www.youtube.com/watch?v=wodWDIdV9BY tutorial
  */
 
@@ -16,6 +16,12 @@ const enableDarkMode = () => {
   document.body.classList.add("darkmode");
   // 2. update darkMode in the localStorage so it remembers
   localStorage.setItem("darkMode", "enabled");
+
+  document.querySelector('.header-text-container h1').style.color = "#FFF";
+  const card = document.querySelectorAll('.card-name');
+  for (let i = 0; i < card.length; i+=1) {
+    card[i].style.color = "#000";
+  }
 }
 
 const disableDarkMode = () => {
@@ -36,7 +42,7 @@ darkModeToggle.addEventListener('click', () => {
   // if it not current enabled, enable it
   if (darkMode !== 'enabled') {
     enableDarkMode();
-    // if it has been enabled, turn it off  
+    // if it has been enabled, turn it off
   } else {
     disableDarkMode();
   }

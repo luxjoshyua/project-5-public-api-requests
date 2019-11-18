@@ -7,7 +7,7 @@ const cards = document.querySelectorAll('.card');
 
 
 /**
- * @param {data} create the 12 user cards on load, 
+ * @param {data} create the 12 user cards on load,
  * populate it with the data fetched
  */
 const createUserCard = (data) => {
@@ -59,7 +59,7 @@ const createSearchBar = () => {
 }
 
 /**
- * @param {e} capture the user event 
+ * @param {e} capture the user event
  * @param {data} pass the data to test, better than looking at the DOM names, more reliable
  */
 const createSearchAction = (e, data) => {
@@ -101,7 +101,7 @@ const createModalCard = (data) => {
         <div class="modal-info-container">
             <img class="modal-img" src="" alt="profile picture">
             <h3 id="name" class="modal-name cap">
-           
+
             </h3>
             <p class="modal-text modal-email"></p>
             <p class="modal-text modal-cap"></p>
@@ -130,13 +130,13 @@ const createModalCard = (data) => {
     cycleModal(data, -1);
   })
   right.addEventListener("click", (e) => {
-    // +1 means go forward one modal 
+    // +1 means go forward one modal
     cycleModal(data, 1);
   })
 }
 
 /**
- * @param {user} is the user card that has been clicked, 
+ * @param {user} is the user card that has been clicked,
  * populate it with the data already fetched
  */
 const clickedModal = (user, i) => {
@@ -199,13 +199,14 @@ fetchRequest(urlRequest)
     createModalCard(data);
     // call function that sets up change listener on input
     const input = document.getElementById('search-input');
-    input.addEventListener('keydown', (e) => {
+    input.addEventListener('keyup', (e) => {
+      console.log("the " + e + " is doing this");
       createSearchAction(e, data);
     })
     // the search event is fired when a search is initiated using an <input> element of type="search"
     input.addEventListener('search', (e) => {
       createSearchAction(e, data);
-    }); 
+    });
   })
 
   .catch(error => {
