@@ -76,6 +76,7 @@ const createSearchAction = (e, data) => {
     } else {
       // if it doesn't, add a class of hidden and set user visible to false
       user.visible = false;
+      // user.visible = true; 
       user.cardElement.style.display = 'none';
     }
   })
